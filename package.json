@@ -1,0 +1,16 @@
+{
+  "name": "react_express_mongodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"cd server && node server.js\" \"cd client && npm start\""
+  },
+  "keywords": [],
+  "author": "Bryant Tran <bryant.t.tran1@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^4.1.1"
+  }
+}
