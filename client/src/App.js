@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Button } from 'semantic-ui-react';
+import Routes from "./Routes";
 
 class App extends Component {
   state = {
@@ -12,6 +14,7 @@ class App extends Component {
     objectToUpdate: null
   };
 
+  // Fetches all data when component mounts
   componentDidMount() {
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
@@ -20,6 +23,7 @@ class App extends Component {
     }
   }
 
+  // Kills process after finished
   componentWillUnmount() {
     if (this.state.intervalIsSet) {
       clearInterval(this.state.intervalIsSet);
@@ -27,12 +31,14 @@ class App extends Component {
     }
   }
 
+  // Method to fetch to our backend API to fetch from MongoDB
   getDataFromDb = () => {
     fetch("http://localhost:4000/api/getData")
       .then(data => data.json())
       .then(res => this.setState({ data: res.data }));
   };
 
+  //Method to post to our backend API to post to MongoDB
   putDataToDB = message => {
     let currentIds = this.state.data.map(data => data.id);
     let idToBeAdded = 0;
@@ -46,6 +52,7 @@ class App extends Component {
     });
   };
 
+  //Method to call our backend API to delete to the MongoDB document
   deleteFromDB = idTodelete => {
     let objIdToDelete = null;
     this.state.data.forEach(dat => {
@@ -62,6 +69,7 @@ class App extends Component {
     });
   };
 
+  //Method to call our backend API to update to the MongoDB document
   updateDB = (idToUpdate, updateToApply) => {
     let objIdToUpdate = null;
     this.state.data.forEach(dat => {
@@ -82,8 +90,8 @@ class App extends Component {
     return (
       <div>
         <ul>
-          {data.length <= 0 ? "NO DB ENTRIES YET" : data.map((dat,index) => (
-            <li style={{ padding: "10px" }} key={index}>
+          {data.length <= 0 ? "No Documents available" : data.map(dat => (
+            <li style={{ padding: "10px" }} key={dat._id}>
               <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
               <span style={{ color: "gray" }}> message: </span>
               {dat.message}
@@ -94,46 +102,48 @@ class App extends Component {
           <input
             type="text"
             onChange={e => this.setState({ message: e.target.value })}
-            placeholder="add something in the database"
+            placeholder="Message to add"
             style={{ width: "200px" }}
           />
-          <button onClick={() => this.putDataToDB(this.state.message)}>
-            ADD
-          </button>
+          <Button secondary onClick={() => this.putDataToDB(this.state.message)}>
+            Add
+          </Button>
         </div>
         <div style={{ padding: "10px" }}>
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ idToDelete: e.target.value })}
-            placeholder="put id of item to delete here"
+            placeholder="ID of item to delete"
           />
-          <button onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            DELETE
-          </button>
+          <Button secondary onClick={() => this.deleteFromDB(this.state.idToDelete)}>
+            Delete
+          </Button>
         </div>
         <div style={{ padding: "10px" }}>
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ idToUpdate: e.target.value })}
-            placeholder="id of item to update here"
+            placeholder="ID of item to update"
           />
           <input
             type="text"
             style={{ width: "200px" }}
             onChange={e => this.setState({ updateToApply: e.target.value }) }
-            placeholder="put new value of the item here"
+            placeholder="Message of item to add"
           />
-          <button
+          <Button secondary
             onClick={() =>
               this.updateDB(this.state.idToUpdate, this.state.updateToApply)
             }
           >
-            UPDATE
-          </button>
+            Update
+          </Button>
         </div>
+        <Routes />
       </div>
+
     );
   }
 }
