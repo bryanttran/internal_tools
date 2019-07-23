@@ -30,7 +30,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
@@ -42,6 +42,15 @@ router.get('/getData', (req, res) => {
     return res.json({ success: true, data: data });
   });
 });
+
+router.post('/getLogin', (req, res) => {
+  const { username, password } = req.body;
+  console.log(`getLogin ${username} && ${password}`);
+
+  const test = Data.find({username: username, password: password })
+  console.log(`login test ${test}`);
+  console.log(Object.keys(test));
+})
 
 // this is our update method
 // this method overwrites existing data in our database
@@ -71,7 +80,7 @@ router.delete('/deleteData', (req, res) => {
 router.post('/putData', (req, res) => {
   let data = new Data();
 
-  const { id, message } = req.body;
+  const { id, message, username, password } = req.body;
 
   if ((!id && id !== 0) || !message) {
     return res.json({
@@ -80,6 +89,8 @@ router.post('/putData', (req, res) => {
     });
   }
   data.message = message;
+  data.username = username;
+  data.password = password;
   data.id = id;
   data.save((err) => {
     if (err) return res.json({ success: false, error: err });
