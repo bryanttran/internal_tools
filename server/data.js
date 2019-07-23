@@ -7,7 +7,9 @@ const Schema = mongoose.Schema;
 const DataSchema = new Schema(
   {
     id: Number,
-    message: String
+    message: String,
+    username: String,
+    password: String
   },
   { timestamps: true }
 );

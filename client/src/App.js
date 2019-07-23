@@ -8,6 +8,8 @@ class App extends Component {
     data: [],
     id: 0,
     message: null,
+    username: null,
+    password: null,
     intervalIsSet: false,
     idToDelete: null,
     idToUpdate: null,
@@ -39,16 +41,18 @@ class App extends Component {
   };
 
   //Method to post to our backend API to post to MongoDB
-  putDataToDB = message => {
+  putDataToDB = (message, username, password) => {
     let currentIds = this.state.data.map(data => data.id);
     let idToBeAdded = 0;
     while (currentIds.includes(idToBeAdded)) {
       ++idToBeAdded;
     }
 
-    axios.post("http://localhost:4000/api/putData", { 
+    axios.post("http://localhost:4000/api/putData", {
       id: idToBeAdded,
-      message: message
+      message: message,
+      username: username,
+      password: password
     });
   };
 
@@ -60,8 +64,6 @@ class App extends Component {
         objIdToDelete = dat.id;
       }
     });
-    console.log(this.state.id);
-
     axios.delete("http://localhost:4000/api/deleteData", {
       data: {
         id: objIdToDelete
@@ -81,8 +83,7 @@ class App extends Component {
     axios.post("http://localhost:4000/api/updateData", {
       id: objIdToUpdate,
       update: { message: updateToApply } 
-    }
-    );
+    });
   };
 
   render() {
@@ -93,19 +94,32 @@ class App extends Component {
           {data.length <= 0 ? "No Documents available" : data.map(dat => (
             <li style={{ padding: "10px" }} key={dat._id}>
               <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
-              <span style={{ color: "gray" }}> message: </span>
-              {dat.message}
+              <span style={{ color: "gray" }}> message: </span> {dat.message}<br />
+              <span style={{ color: "gray" }}> username: </span> {dat.username} <br />
+              <span style={{ color: "gray" }}> password: </span> {dat.password} <br />
             </li>
           ))}
         </ul>
         <div style={{ padding: "10px" }}>
-          <input
+        <input
             type="text"
             onChange={e => this.setState({ message: e.target.value })}
             placeholder="Message to add"
             style={{ width: "200px" }}
           />
-          <Button secondary onClick={() => this.putDataToDB(this.state.message)}>
+        <input
+            type="text"
+            onChange={e => this.setState({ username: e.target.value })}
+            placeholder="Username to add"
+            style={{ width: "200px" }}
+          />
+        <input
+          type="text"
+          onChange={e => this.setState({ password: e.target.value })}
+          placeholder="Password to add"
+          style={{ width: "200px" }}
+        />
+          <Button secondary onClick={() => this.putDataToDB(this.state.message, this.state.username, this.state.password)}>
             Add
           </Button>
         </div>
