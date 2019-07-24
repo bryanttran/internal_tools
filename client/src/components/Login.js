@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Button } from 'semantic-ui-react';
+import { Form } from 'semantic-ui-react';
 import axios from "axios";
 
 export default class Login extends Component {
@@ -8,25 +8,41 @@ export default class Login extends Component {
         password: '', 
         submittedUsername: '', 
         submittedPassword: '' ,
-        validLogin: null
+        validLogin: false
     };
 
     isUsernamePasswordValid = (username, password) => {
         console.log(`isUsernamePasswordValid ${username} + ${password}`);
 
+        this.setState({username: username, password: password});
+
         axios.post("http://localhost:4000/api/getLogin", {
             username: username,
             password: password,
             validLogin: this.validLogin
-          });
+        })
+          .then((res) => {
+            console.log(`success: ${res.data.success}`)
+            if(res.data.success === true) {
+              this.setState({validLogin: true});
+            } else 
+              this.setState({validLogin: false});
+            console.log(`state validLogin: ${this.state.validLogin}`)
+            console.log(res);
+        })
+            .catch((error) => {
+                console.error(error)
+            });
+
     };
 
-    handleChange2 = (e, { name, value }) => this.setState({ [name]: value });
+    handleChange = (e, { name, value }) => this.setState({ [name]: value });
   
-    handleSubmit2 = () => {
+    handleSubmit = () => {
       const { username, password } = this.state;
   
       this.setState({ submittedUsername: username, submittedPassword: password });
+
     }
   
     render() {
@@ -34,19 +50,18 @@ export default class Login extends Component {
   
       return (
         <div>
-          <Form onSubmit={this.handleSubmit2}>
+          <Form onSubmit={this.handleSubmit}>
             <Form.Group>
-              <Form.Input placeholder='Name' name='username' value={username} onChange={this.handleChange2} />
+              <Form.Input placeholder='Name' name='username' value={username} onChange={this.handleChange} />
               <Form.Input
                 placeholder='password'
                 name='password'
                 value={password}
-                onChange={this.handleChange2}
+                onChange={this.handleChange}
               />
-              <Form.Button content='Submit' />
+              <Form.Button onClick={ () => this.isUsernamePasswordValid(username, password)} content='Submit' />
             </Form.Group>
-          </Form>
-          <Button onClick={this.isUsernamePasswordValid(submittedUsername, submittedPassword)} content='submit2' />
+          </Form> 
           <strong>onChange:</strong>
           <pre>{JSON.stringify({ username, password }, null, 2)}</pre>
           <strong>onSubmit:</strong>

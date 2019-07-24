@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     this.getDataFromDb();
     if (!this.state.intervalIsSet) {
-      let interval = setInterval(this.getDataFromDb, 5000);
+      let interval = setInterval(this.getDataFromDb, 50000);
       this.setState({ intervalIsSet: interval });
     }
   }
@@ -86,7 +86,7 @@ class App extends Component {
     });
   };
 
-  render() {
+  /*render() {
     const { data } = this.state;
     return (
       <div>
@@ -159,6 +159,14 @@ class App extends Component {
       </div>
 
     );
+  }*/
+  render() {
+    return(
+    <div>
+
+    <Routes />
+  </div>)
+    
   }
 }
 
