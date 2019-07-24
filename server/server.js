@@ -47,9 +47,17 @@ router.post('/getLogin', (req, res) => {
   const { username, password } = req.body;
   console.log(`getLogin ${username} && ${password}`);
 
-  const test = Data.find({username: username, password: password })
-  console.log(`login test ${test}`);
-  console.log(Object.keys(test));
+  Data.findOne({username: username, password: password }, (err, result) => {
+    console.log(`result`);
+    console.log(result);
+    if (err || result === null) return res.json({ success: false, error: err });
+    return res.json({ success: true, validLogin: true });
+
+    /*if(res !== null) {
+      validLogin = true;
+      console.log(`validLogin = true`);
+    }*/
+  })
 })
 
 // this is our update method
