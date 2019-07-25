@@ -4,12 +4,13 @@ import axios from "axios";
 
 export default class Login extends Component {
     state = { 
-        username: '', 
-        password: '', 
-        submittedUsername: '', 
-        submittedPassword: '' ,
-        validLogin: false
-    };
+      username: '', 
+      password: '', 
+      submittedUsername: '', 
+      submittedPassword: '' ,
+      permissionLevel: 0 ,
+      validLogin: false
+   };    
 
     isUsernamePasswordValid = (username, password) => {
         console.log(`isUsernamePasswordValid ${username} + ${password}`);
@@ -23,17 +24,38 @@ export default class Login extends Component {
         })
           .then((res) => {
             console.log(`success: ${res.data.success}`)
+            console.log(res)
             if(res.data.success === true) {
               this.setState({validLogin: true});
-            } else 
+            } else {
               this.setState({validLogin: false});
+            }
+            
             console.log(`state validLogin: ${this.state.validLogin}`)
             console.log(res);
+
+            if(this.state.validLogin) {
+              try {
+                //this.props.validLogin = true;
+                this.props.history.push({
+                  pathname: '/',
+                  state: { detail: res.data }
+                });
+                console.log(this.props)
+                console.log(`${this.state.validLogin} in login`);
+      
+              } catch (e) {
+                alert(e.message);
+              }
+            }
+
         })
             .catch((error) => {
                 console.error(error)
             });
+            console.log(`state validLogin2: ${this.state.validLogin}`)
 
+      
     };
 
     handleChange = (e, { name, value }) => this.setState({ [name]: value });
