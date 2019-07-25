@@ -13,6 +13,8 @@
   "author": "Bryant Tran <bryant.t.tran1@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@casl/ability": "^3.1.2",
+    "@casl/react": "^1.0.3",
     "axios": "^0.18.1",
     "body-parser": "^1.19.0",
     "concurrently": "^4.1.1",

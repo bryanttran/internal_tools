@@ -9,7 +9,8 @@ const DataSchema = new Schema(
     id: Number,
     message: String,
     username: String,
-    password: String
+    password: String,
+    permission: Number
   },
   { timestamps: true }
 );

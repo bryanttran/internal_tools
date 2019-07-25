@@ -51,7 +51,7 @@ router.post('/getLogin', (req, res) => {
     console.log(`result`);
     console.log(result);
     if (err || result === null) return res.json({ success: false, error: err });
-    return res.json({ success: true, validLogin: true });
+    return res.json({ success: true, validLogin: true, permission: result.permission });
 
     /*if(res !== null) {
       validLogin = true;
