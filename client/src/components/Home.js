@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Button } from 'semantic-ui-react';
-
+import { Button, Reveal, Image } from 'semantic-ui-react';
+import Breadcrumbs from './Breadcrumbs';
 
 
 export default class Home extends Component {
@@ -24,10 +24,25 @@ export default class Home extends Component {
   render() {
     return (
       <div className="Home">
+
         <div className="lander">
+        <Breadcrumbs />
+
           <h1>Home page</h1>
           <p>Displaying home</p>
-          <Button onClick={ ()=>this.clog() } content="test"/>
+          <Button primary
+            onClick={ ()=>this.clog() } 
+            content="test"
+            
+          />
+
+        <Reveal animated='small fade'>
+            <Reveal.Content visible>
+              <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='small' />
+            </Reveal.Content>
+            <Reveal.Content hidden>
+            </Reveal.Content>
+          </Reveal>
         </div>
       </div>
     );

@@ -6,8 +6,8 @@ import Login from "./components/Login";
 
 export default () =>
   <Switch>
-    <Route exact path="/" component={Home} />
-    <Route path="/login" exact component={Login} />
+    <Route exact path="/" component={Login} />
+    <Route path="/home" exact component={Home} />
     <Route component={NotFound} />
   </Switch>;
 
