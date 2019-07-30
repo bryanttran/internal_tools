@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import './Login.css';
 import { Form, Message, Segment, Button } from 'semantic-ui-react';
 import axios from "axios";
+
 
 export default class Login extends Component {
     state = { 
@@ -101,7 +103,8 @@ export default class Login extends Component {
             </Form>
             
             {(formError === true) ? <Message error header='Incorrect username or password' 
-              content='Please try logging in again.'/> : null }
+              content='Please try logging in again.' className='loginError' /> : null }
+               
 
           <strong>onChange:</strong>
           <pre>{JSON.stringify({ username, password }, null, 2)}</pre>
