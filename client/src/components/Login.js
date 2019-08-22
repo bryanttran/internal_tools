@@ -86,6 +86,7 @@ export default class Login extends Component {
                   value={username}
                   onChange={this.handleChange}
                 />
+                
                 <Form.Input
                   fluid
                   icon='lock'

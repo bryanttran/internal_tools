@@ -30,6 +30,7 @@ export default class Home extends Component {
 
           <h1>Home page</h1>
           <p>Displaying home</p>
+          <p>Permission level: {this.state.permission}</p>
           <Button primary
             onClick={ ()=>this.clog() } 
             content="test"
