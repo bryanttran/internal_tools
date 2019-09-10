@@ -107,10 +107,10 @@ export default class Login extends Component {
               content='Please try logging in again.' className='loginError' /> : null }
                
 
-          <strong>onChange:</strong>
+          {/*<strong>onChange:</strong>
           <pre>{JSON.stringify({ username, password }, null, 2)}</pre>
           <strong>onSubmit:</strong>
-          <pre>{JSON.stringify({ submittedUsername, submittedPassword }, null, 2)}</pre>
+          <pre>{JSON.stringify({ submittedUsername, submittedPassword }, null, 2)}</pre>*/}
         </div>
       )
     }
