@@ -74,7 +74,7 @@ export default class Login extends Component {
       const { username, password, submittedUsername, submittedPassword, formError } = this.state;
   
       return (
-        <div>
+        <div class='login-container'>
           <Form onSubmit={this.handleSubmit} error={formError} >
               <Segment raised>
                 <Form.Input
