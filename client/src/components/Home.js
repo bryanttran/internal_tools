@@ -37,7 +37,7 @@ export default class Home extends Component {
             
           />
 
-        <Reveal animated='small fade'>
+          <Reveal animated='small fade'>
             <Reveal.Content visible>
               <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='small' />
             </Reveal.Content>
