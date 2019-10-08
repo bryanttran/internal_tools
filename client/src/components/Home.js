@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import { Button, Reveal, Image } from 'semantic-ui-react';
+import { Button, Form } from 'semantic-ui-react';
 import Breadcrumbs from './Breadcrumbs';
+import Tasks from './Tasks';
 
 
 export default class Home extends Component {
 
   state = { 
     permission:0,
-    validLogin: false
+    validLogin: false,
+    activeTask: "",
  };    
 
  componentDidMount() {
    this.setState({permission: this.props.location.state.detail.permission});
-   console.log(this.state.permission)
-
+   console.log(this.state.permission);
  }
 
   clog = () => {
-    console.log(this.props.location.state.detail)
-    console.log(this.state.permission)
+    console.log(this.props.location.state.detail);
+    console.log(this.state.permission);
   }
 
   render() {
@@ -34,16 +35,9 @@ export default class Home extends Component {
           <Button primary
             onClick={ ()=>this.clog() } 
             content="test"
-            
           />
+          <Tasks/>
 
-          <Reveal animated='small fade'>
-            <Reveal.Content visible>
-              <Image src='https://react.semantic-ui.com/images/wireframe/square-image.png' size='small' />
-            </Reveal.Content>
-            <Reveal.Content hidden>
-            </Reveal.Content>
-          </Reveal>
         </div>
       </div>
     );
