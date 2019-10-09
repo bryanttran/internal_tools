@@ -6,20 +6,32 @@ import Tasks from './Tasks';
 
 export default class Home extends Component {
 
-  state = { 
+  constructor(props) {
+    super(props)
+    this.setTask = this.setTask.bind(this)
+  }
+
+  state = {
     permission:0,
     validLogin: false,
     activeTask: "",
- };    
+  };    
 
- componentDidMount() {
-   this.setState({permission: this.props.location.state.detail.permission});
-   console.log(this.state.permission);
- }
+  componentDidMount() {
+    this.setState({permission: this.props.location.state.detail.permission});
+    console.log(`${this.state.permission} componentDidMount`);
+  }
 
   clog = () => {
     console.log(this.props.location.state.detail);
     console.log(this.state.permission);
+  }
+
+  setTask(task) {
+    console.log(task);
+    this.setState({
+      activeTask: task
+    })
   }
 
   render() {
@@ -36,7 +48,7 @@ export default class Home extends Component {
             onClick={ ()=>this.clog() } 
             content="test"
           />
-          <Tasks/>
+          <Tasks setTask={this.setTask} />
 
         </div>
       </div>
