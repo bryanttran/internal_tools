@@ -162,7 +162,7 @@ class App extends Component {
   }*/
   render() {
     return(
-    <div class='parent-container'>
+    <div className='parent-container'>
     <Routes />
   </div>)
     
