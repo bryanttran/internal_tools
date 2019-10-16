@@ -4,6 +4,7 @@ var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const Data = require('./data');
+const ClientData = require('./clientData');
 
 const API_PORT = 4000;
 const app = express();
@@ -37,6 +38,7 @@ app.use(logger('dev'));
 // this is our get method
 // this method fetches all available data in our database
 router.get('/getData', (req, res) => {
+  console.log(`[getData] Made call`);
   Data.find((err, data) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data: data });
@@ -44,19 +46,18 @@ router.get('/getData', (req, res) => {
 });
 
 router.post('/getLogin', (req, res) => {
-  const { username, password } = req.body;
-  console.log(`getLogin ${username} && ${password}`);
-
-  Data.findOne({username: username, password: password }, (err, result) => {
-    console.log(`result`);
-    console.log(result);
+  console.log(`[getLogin] Made call`);
+  Data.findOne( { username: req.body.username, password: req.body.password },(err, result) => {
     if (err || result === null) return res.json({ success: false, error: err });
-    return res.json({ success: true, validLogin: true, permission: result.permission });
+    return res.json({ success: true, validLogin: true, permission: result.permission, result: result });
+  })
+})
 
-    /*if(res !== null) {
-      validLogin = true;
-      console.log(`validLogin = true`);
-    }*/
+router.get('/getClients', (req, res) => {
+  console.log(`[getClients] Made call`);
+  ClientData.find((err, result) => {
+    if (err || result === null) return res.json({ success: false, error: err });
+    return res.json({ success: true, client: result });
   })
 })
 

@@ -18,7 +18,6 @@ class App extends Component {
 
   // Fetches all data when component mounts
   componentDidMount() {
-    this.getDataFromDb();
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 50000);
       this.setState({ intervalIsSet: interval });
@@ -39,6 +38,13 @@ class App extends Component {
       .then(data => data.json())
       .then(res => this.setState({ data: res.data }));
   };
+
+    // Method to fetch to our backend API to fetch from MongoDB
+    getClientsFromDb = () => {
+      fetch("http://localhost:4000/api/getClients")
+        .then(data => data.json())
+        .then(res => this.setState({ formInfo: res.data }));
+      };
 
   //Method to post to our backend API to post to MongoDB
   putDataToDB = (message, username, password) => {

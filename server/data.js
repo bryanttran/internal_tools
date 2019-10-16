@@ -1,4 +1,4 @@
-// /backend/data.js
+// /server/data.js
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -12,6 +12,7 @@ const DataSchema = new Schema(
     password: String,
     permission: Number
   },
+  { collection: 'datas' },
   { timestamps: true }
 );
 

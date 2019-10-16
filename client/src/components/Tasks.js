@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
+import axios from "axios";
 
 const Selections = [
   {
@@ -24,11 +25,32 @@ export class Tasks extends Component {
   }
 
   state = {
+    formInfo: {
+      task: 'unapproveEmail',
+    },
+    clientList: []
+  };    
 
+
+  getClientList = () => {
+    axios.get("http://localhost:4000/api/getClients", {
+    })
+      .then((res) => {
+        console.log(res.data.client)
+        if(res.data.success === true) {
+          console.log(`[getClientList] Got client list`);
+          this.setState({clientList: res.data.client});
+          console.log(this.state.clientList)
+        } else {
+         console.error(`[getClientList] Error getting client list`);
+        }
+    })
+        .catch((error) => {
+            console.error(error)
+        }) 
   };    
 
   componentWillMount() {
-    console.log("test")
     this.props.setTask(Selections.text)
     this.setState({
       Selections: [
@@ -44,6 +66,7 @@ export class Tasks extends Component {
         },
       ]
     })
+    this.getClientList()    
   }
 
   handleChange(event) {
@@ -51,19 +74,21 @@ export class Tasks extends Component {
     this.props.setTask(event.target.value)
   }
 
-  handleSubmit() {
-    console.log(`handleSubmit`)
+  handleSubmitForm() {
+    event.preventDefault();
+    console.log(`inside handleSubmitForm`)
+    
   }
 
   render() {
       return (
           <div>
-              <Form onSubmit={this.handleSubmit}>
+              <Form onSubmit={this.handleSubmitForm}>
                 <Form.Group widths='equal' >
-                    <Form.Select label='Tasks' control='select' placeholder='Select Task' options={this.state.Selections} onChange={this.handleChange}> {Selection}
-                    </Form.Select>
-                  </Form.Group>
-                  <Form.Button>Submit</Form.Button>
+                  <Form.Select label='Tasks' control='select' placeholder='Select Task' options={this.state.Selections} onChange={this.handleChange}> {Selection}
+                  </Form.Select>
+                </Form.Group>
+                <Form.Button>Submit</Form.Button>
               </Form> 
           </div>
       )
