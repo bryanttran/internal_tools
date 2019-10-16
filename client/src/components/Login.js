@@ -35,23 +35,22 @@ export default class Login extends Component {
             }
             
             console.log(`state isLoggedIn: ${this.state.isLoggedIn}`)
-            console.log(res);
+            console.log(res.data.result);
+
 
             if(this.state.isLoggedIn) {
               try {
+                console.log(this.props)
+                console.log(`${this.state.isLoggedIn} in login`);
                 //this.props.isLoggedIn = true;
                 this.props.history.push({
                   pathname: '/home',
                   state: { detail: res.data }
                 });
-                console.log(this.props)
-                console.log(`${this.state.isLoggedIn} in login`);
-      
               } catch (e) {
                 alert(e.message);
               }
             }
-
         })
             .catch((error) => {
                 console.error(error)

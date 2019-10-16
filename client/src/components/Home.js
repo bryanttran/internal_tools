@@ -14,23 +14,24 @@ export default class Home extends Component {
   state = {
     permission:0,
     validLogin: false,
-    activeTask: 'unapproveEmail',
+    formInfo: {
+      task: 'unapproveEmail',
+    }
   };    
 
   componentDidMount() {
-    this.setState({permission: this.props.location.state.detail.permission});
-    console.log(`${this.state.permission} componentDidMount`);
+    this.setState({permission: this.props.location.state.detail.result.permission});
   }
 
   clog = () => {
     console.log(this.props.location.state.detail);
     console.log(this.state.permission);
+    console.log(this.state.formInfo);
   }
 
   setTask(task) {
-    console.log(task);
     this.setState({
-      activeTask: task
+      formInfo: task
     })
   }
 
