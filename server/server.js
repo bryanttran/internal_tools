@@ -46,7 +46,7 @@ router.get('/getData', (req, res) => {
 });
 
 router.post('/getLogin', (req, res) => {
-  console.log(`[getLogin] Made call`);
+  console.log(`**[getLogin] Made call`);
   Data.findOne( { username: req.body.username, password: req.body.password },(err, result) => {
     if (err || result === null) return res.json({ success: false, error: err });
     return res.json({ success: true, validLogin: true, permission: result.permission, result: result });
@@ -54,9 +54,10 @@ router.post('/getLogin', (req, res) => {
 })
 
 router.get('/getClients', (req, res) => {
-  console.log(`[getClients] Made call`);
+  console.log(`**[getClients] Made call`);
   ClientData.find((err, result) => {
     if (err || result === null) return res.json({ success: false, error: err });
+    console.log(`**[getClients] result = ${result}`);
     return res.json({ success: true, client: result });
   })
 })

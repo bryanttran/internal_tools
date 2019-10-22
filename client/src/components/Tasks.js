@@ -36,13 +36,13 @@ export class Tasks extends Component {
     axios.get("http://localhost:4000/api/getClients", {
     })
       .then((res) => {
-        console.log(res.data.client)
+        console.log(res.data.client[0])
         if(res.data.success === true) {
-          console.log(`[getClientList] Got client list`);
+          console.log(`**[getClientList] Got client list`);
           this.setState({clientList: res.data.client});
           console.log(this.state.clientList)
         } else {
-         console.error(`[getClientList] Error getting client list`);
+         console.error(`**[getClientList] Error getting client list`);
         }
     })
         .catch((error) => {
@@ -70,14 +70,13 @@ export class Tasks extends Component {
   }
 
   handleChange(event) {
-    console.log(event.target)
+    console.log(event.target.value)
     this.props.setTask(event.target.value)
   }
 
   handleSubmitForm() {
     event.preventDefault();
     console.log(`inside handleSubmitForm`)
-    
   }
 
   render() {
