@@ -9,6 +9,7 @@ export default class Home extends Component {
   constructor(props) {
     super(props)
     this.setTask = this.setTask.bind(this)
+    this.setClient = this.setClient.bind(this)
   }
 
   state = {
@@ -30,8 +31,16 @@ export default class Home extends Component {
   }
 
   setTask(task) {
+    console.log(task)
     this.setState({
       formInfo: task
+    })
+  }
+
+  setClient(client) {
+    console.log(client)
+    this.setState({
+      formInfo: client
     })
   }
 
@@ -49,7 +58,7 @@ export default class Home extends Component {
             onClick={ ()=>this.clog() } 
             content="test"
           />
-          <Tasks setTask={this.setTask} />
+          <Tasks setTask={this.setTask} setClient={this.setClient} />
 
         </div>
       </div>
