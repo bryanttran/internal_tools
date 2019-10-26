@@ -21,7 +21,7 @@ const DataSchema = new Schema({
       type: String
     }
   },
-}, { collection: 'emails' })
+}, { collection: 'clients' })
   
   
 

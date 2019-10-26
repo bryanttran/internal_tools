@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form } from 'semantic-ui-react'
+import { Form, Dropdown } from 'semantic-ui-react'
 import axios from "axios";
 
 const Selections = [
@@ -21,14 +21,17 @@ export class Tasks extends Component {
 
   constructor() {
     super();
-    this.handleChange = this.handleChange.bind(this)
+    this.handleTaskChange = this.handleTaskChange.bind(this)
+    this.handleClientChange = this.handleClientChange.bind(this)
   }
 
   state = {
     formInfo: {
       task: 'unapproveEmail',
     },
-    clientList: []
+    clientList: [],
+    taskValue: '',
+    clientValue: ''
   };    
 
 
@@ -69,10 +72,20 @@ export class Tasks extends Component {
     this.getClientList()    
   }
 
-  handleChange(event) {
-    console.log(event.target.value)
-    this.props.setTask(event.target.value)
+  handleTaskChange(event, {value}) {
+    console.log(value)
+    this.props.setTask(value)
+    this.setState({ taskValue: value })
   }
+
+  handleClientChange(event, {value}) {
+    console.log(value)
+    this.props.setClient(value)
+    this.setState({ clientValue:value })
+  }
+
+  //handleChange = (e, { clientList }) => this.setState({ clientList })
+
 
   handleSubmitForm() {
     event.preventDefault();
@@ -80,13 +93,33 @@ export class Tasks extends Component {
   }
 
   render() {
+    const {  clientList, clientValue, taskValue } = this.state
       return (
           <div>
               <Form onSubmit={this.handleSubmitForm}>
                 <Form.Group widths='equal' >
-                  <Form.Select label='Tasks' control='select' placeholder='Select Task' options={this.state.Selections} onChange={this.handleChange}> {Selection}
-                  </Form.Select>
+                  <Dropdown 
+                    fluid selection
+                    label='Select a Client' 
+                    control='select' 
+                    placeholder='Select Task' 
+                    options={Selections} 
+                    value={taskValue} 
+                    onChange={this.handleTaskChange}>
+                  </Dropdown>
                 </Form.Group>
+                <Form.Group widths='equal' >
+                  <Dropdown 
+                    fluid selection
+                    label='Select a Client' 
+                    control='select' 
+                    placeholder='Select Client' 
+                    options={clientList} 
+                    value={clientValue} 
+                    onChange={this.handleClientChange}>
+                  </Dropdown>
+                </Form.Group>
+                
                 <Form.Button>Submit</Form.Button>
               </Form> 
           </div>
