@@ -12,9 +12,9 @@ const DataSchema = new Schema(
     password: String,
     permission: Number
   },
-  { collection: 'datas' },
+  { collection: 'login' },
   { timestamps: true }
 );
 
 // export the new Schema so we could modify it using Node.js
-module.exports = mongoose.model("Data", DataSchema);
+module.exports = mongoose.model("Login", DataSchema);
