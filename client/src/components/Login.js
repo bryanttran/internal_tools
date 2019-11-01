@@ -60,8 +60,6 @@ export default class Login extends Component {
 
     handleChange = (e, { name, value }) => {
       this.setState({ [name]: value });
-      if(!this.formError)
-        this.setState({ formError: false });
     }
     
     handleSubmit = () => {
@@ -74,6 +72,8 @@ export default class Login extends Component {
   
       return (
         <div className='login-container'>
+          {(formError === true) ? <Message error header='Incorrect username or password' 
+              content='Please try logging in again.' className='loginError' /> : null }
           <Form onSubmit={this.handleSubmit} error={formError} >
               <Segment raised>
                 <Form.Input
@@ -101,11 +101,6 @@ export default class Login extends Component {
                 </Button>
               </Segment>
             </Form>
-            
-            {(formError === true) ? <Message error header='Incorrect username or password' 
-              content='Please try logging in again.' className='loginError' /> : null }
-               
-
           {/*<strong>onChange:</strong>
           <pre>{JSON.stringify({ username, password }, null, 2)}</pre>
           <strong>onSubmit:</strong>
