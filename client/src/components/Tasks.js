@@ -15,7 +15,6 @@ const Selections = [
   },
 ]
 
-let Selection = Selections.map( task => <option value={task.value} key={task.key} > {task.text} </option> )
 
 export class Tasks extends Component {
 
@@ -119,8 +118,6 @@ export class Tasks extends Component {
                     onChange={this.handleClientChange}>
                   </Dropdown>
                 </Form.Group>
-                
-                <Form.Button>Submit</Form.Button>
               </Form> 
           </div>
       )
