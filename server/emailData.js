@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const DataSchema = new Schema({
   id: Number,
   name: String,
-  mail_object: {
+  emailList: [{
     statementType: {
       type: String
     },
@@ -17,12 +17,12 @@ const DataSchema = new Schema({
     header: {
       type: String
     },
-    header: {
+    body: {
       type: String
     }
-  },
-}, { collection: 'clients' })
-  
+  }],
+}, { collection: 'emails' })
+
 
 // export the new Schema so we could modify it using Node.js
-module.exports = mongoose.model("ClientData", DataSchema);
+module.exports = mongoose.model("emailData", DataSchema);

@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const logger = require('morgan');
 const loginData = require('./login');
 const ClientData = require('./clientData');
+const emailData = require('./emailData');
 
 const API_PORT = 4000;
 const app = express();
@@ -47,7 +48,7 @@ router.get('/getData', (req, res) => {
 
 router.post('/getLogin', (req, res) => {
   console.log(`**[getLogin] Made call`);
-  loginData.findOne( { username: req.body.username, password: req.body.password },(err, result) => {
+  loginData.findOne( { username: req.body.username, password: req.body.password }, (err, result) => {
     if (err || result === null) return res.json({ success: false, error: err });
     return res.json({ success: true, validLogin: true, permission: result.permission, result: result });
   })
@@ -59,6 +60,14 @@ router.get('/getClients', (req, res) => {
     if (err || result === null) return res.json({ success: false, error: err });
     //console.log(`**[getClients] result = ${result}`);
     return res.json({ success: true, client: result });
+  })
+})
+
+router.post('/getEmails', (req, res) => {
+  console.log(`**[getEmails] Made call`);
+  emailData.findOne( { name: req.body.client }, (err, result) => {
+    if (err || result === null) return res.json({ success: false, error: err });
+    return res.json({ success: true, result: result.emailList });
   })
 })
 

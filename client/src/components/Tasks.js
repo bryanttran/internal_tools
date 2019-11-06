@@ -46,7 +46,7 @@ export class Tasks extends Component {
         } else {
          console.error(`**[getClientList] Error getting client list`);
         }
-    })
+      })
         .catch((error) => {
             console.error(error)
         }) 
