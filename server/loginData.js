@@ -17,4 +17,4 @@ const DataSchema = new Schema(
 );
 
 // export the new Schema so we could modify it using Node.js
-module.exports = mongoose.model("Login", DataSchema);
+module.exports = mongoose.model("loginData", DataSchema);
