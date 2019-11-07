@@ -3,9 +3,10 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const loginData = require('./login');
+const loginData = require('./loginData');
 const ClientData = require('./clientData');
 const emailData = require('./emailData');
+const userData = require('./userData');
 
 const API_PORT = 4000;
 const app = express();
@@ -68,6 +69,14 @@ router.post('/getEmails', (req, res) => {
   emailData.findOne( { name: req.body.client }, (err, result) => {
     if (err || result === null) return res.json({ success: false, error: err });
     return res.json({ success: true, result: result.emailList });
+  })
+})
+
+router.post('/getUsers', (req, res) => {
+  console.log(`**[getUsers] Made call`);
+  userData.findOne( { name: req.body.client }, (err, result) => {
+    if (err || result === null) return res.json({ success: false, error: err });
+    return res.json({ success: true, result: result });
   })
 })
 
