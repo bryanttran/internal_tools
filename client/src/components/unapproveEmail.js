@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Table } from 'semantic-ui-react';
 import axios from "axios";
+import EmailTable from './EmailTable'
 
-let warn = console.error ;
+/*let warn = console.error ;
 console.error  = function(warning) {
     if (/(Invalid prop|Failed prop type)/.test(warning)) {
         console.log('failed')
@@ -12,7 +13,7 @@ console.error  = function(warning) {
         });
     }
     warn.apply(console, arguments);
-};
+};*/
 
 export class unapproveEmail extends Component {
 
@@ -26,7 +27,7 @@ export class unapproveEmail extends Component {
         }]
       };  
     
-    componentDidMount() {
+    componentDidMount () {
         console.log(this.props.location.state)
         try {
           this.setState({
@@ -58,60 +59,32 @@ export class unapproveEmail extends Component {
         
       }
 
-      
-  clog = () => {
-    console.log(this.state.emailList);
-  }
+      nextPage = () => {
+        this.props.history.push({
+          pathname: '/unapproveEmailConfirm',
+          state: {
+             client: this.props.client,
+             statementType: 'a'
+          }
+        })
+      }
+
+    clog = () => {
+      console.log(this.state.emailList);
+    }
+  
     render() {
         return (
             <div>
-                unapproveEmail
                 <Button primary 
                   onClick={ ()=>this.clog() } 
                   content="cLog"
                 />
-                 <Table celled selectable>
-    <Table.Header>
-      <Table.Row>
-        <Table.HeaderCell>Name</Table.HeaderCell>
-        <Table.HeaderCell>Status</Table.HeaderCell>
-        <Table.HeaderCell>Notes</Table.HeaderCell>
-      </Table.Row>
-    </Table.Header>
-
-    <Table.Body>
-      <Table.Row onClick ={ () => this.clog()}>
-        <Table.Cell>John</Table.Cell>
-        <Table.Cell>No Action</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jamie</Table.Cell>
-        <Table.Cell>Approved</Table.Cell>
-        <Table.Cell>Requires call</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jill</Table.Cell>
-        <Table.Cell>Denied</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-      </Table.Row>
-      <Table.Row warning>
-        <Table.Cell>John</Table.Cell>
-        <Table.Cell>No Action</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jamie</Table.Cell>
-        <Table.Cell positive>Approved</Table.Cell>
-        <Table.Cell warning>Requires call</Table.Cell>
-      </Table.Row>
-      <Table.Row>
-        <Table.Cell>Jill</Table.Cell>
-        <Table.Cell negative>Denied</Table.Cell>
-        <Table.Cell>None</Table.Cell>
-      </Table.Row>
-    </Table.Body>
-  </Table>
+                 <EmailTable 
+                    client={this.state.client}  
+                    emailList={this.state.emailList}
+                    nextPage={this.nextPage}
+                  />
             </div>
         )
     }

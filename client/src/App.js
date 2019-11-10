@@ -23,7 +23,7 @@ class App extends Component {
       this.setState({ intervalIsSet: interval });
     }
   }
-
+  
   // Kills process after finished
   componentWillUnmount() {
     if (this.state.intervalIsSet) {

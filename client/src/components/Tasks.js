@@ -52,7 +52,7 @@ export class Tasks extends Component {
         }) 
   };    
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.setTask(Selections.text)
     this.setState({
       Selections: [
