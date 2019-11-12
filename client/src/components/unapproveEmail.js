@@ -17,6 +17,10 @@ console.error  = function(warning) {
 
 export class unapproveEmail extends Component {
 
+  constructor(props) {
+    super(props);
+  }
+
     state = {
         client: '',
         emailList: [{
@@ -24,7 +28,8 @@ export class unapproveEmail extends Component {
           isApproved: "",
           header: "",
           body: "",
-        }]
+        }],
+        selectedStatementType: "",
       };  
     
     componentDidMount () {
@@ -56,21 +61,20 @@ export class unapproveEmail extends Component {
             .catch((error) => {
                 console.error(error)
             }) 
-        
       }
 
-      nextPage = () => {
+      nextPage = (statementType) => {
         this.props.history.push({
           pathname: '/unapproveEmailConfirm',
           state: {
-             client: this.props.client,
-             statementType: 'a'
+             client: this.state.client,
+             statementType: statementType
           }
         })
       }
 
     clog = () => {
-      console.log(this.state.emailList);
+      console.log(this.state);
     }
   
     render() {

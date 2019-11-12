@@ -18,8 +18,8 @@ const Selections = [
 
 export class Tasks extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleTaskChange = this.handleTaskChange.bind(this)
     this.handleClientChange = this.handleClientChange.bind(this)
   }

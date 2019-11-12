@@ -6,6 +6,7 @@ import Login from "./components/Login";
 import resetAdminPassword from "./components/resetAdminPassword";
 import unapproveEmail from "./components/unapproveEmail";
 import unapproveEmailConfirm from "./components/unapproveEmailConfirm";
+import unapproveEmailComplete from "./components/unapproveEmailComplete";
 
 export default () =>
   <BrowserRouter>
@@ -15,8 +16,9 @@ export default () =>
       <Route path="/resetAdminPassword" exact component={resetAdminPassword} />
       <Route path="/unapproveEmail" exact component={unapproveEmail} />
       <Route path="/unapproveEmailConfirm" exact component={unapproveEmailConfirm} />
+      <Route path="/unapproveEmailComplete" exact component={unapproveEmailComplete} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>
-  
+
 

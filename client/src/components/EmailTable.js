@@ -32,13 +32,11 @@ export class EmailTable extends Component {
             client: this.props.client,
             emailList: this.props.emailList
         }), () => console.log(`state updated: ${this.state}`)
-
     }
     
     clog = (statementType) => {
         console.log(this.props);
-
-       this.props.nextPage(statementType)
+        this.props.nextPage(statementType)
     }
 
     RenderTBodyHeader = () => {
@@ -50,10 +48,6 @@ export class EmailTable extends Component {
                 </Table.Row>
             </Table.Header>
         )
-    }
-
-    addStyleIfApproved = (isApproved) => {
-        return (isApproved === 'Y' ? redStyle : '')
     }
 
     RenderTBodyRow = () => {
