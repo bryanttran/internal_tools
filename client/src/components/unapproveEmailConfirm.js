@@ -1,18 +1,33 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import {Button} from 'semantic-ui-react'
+
+const redStyle = { color: 'red'}
 
 export class unapproveEmailConfirm extends Component {
     static propTypes = {
 
     }
 
+    NextPage = () => {
+        this.props.history.push({
+            pathname: '/unapproveEmailComplete'
+        })
+    }
+
     render() {
         return (
             <div>
-                unapproveEmailConfirm
+                <h2>Unapprove Email for <span style={redStyle}>{this.props.location.state.client}</span> with statement type <span style={redStyle}>{this.props.location.state.statementType}</span>?</h2>
+                {console.log(this.props.location.state)}
+                <Button positive onClick={()=>this.NextPage()}>Contine</Button>
+                <Button negative>Go Back</Button>
             </div>
         )
     }
+
+    
 }
+
 
 export default unapproveEmailConfirm
