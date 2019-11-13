@@ -67,8 +67,9 @@ export class unapproveEmail extends Component {
         this.props.history.push({
           pathname: '/unapproveEmailConfirm',
           state: {
-             client: this.state.client,
-             statementType: statementType
+             client: this.props.location.state.client,
+             statementType: statementType,
+             permission: this.props.location.state.permission
           }
         })
       }

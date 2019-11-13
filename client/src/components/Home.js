@@ -5,6 +5,7 @@ import Tasks from './Tasks';
 import PropTypes from 'prop-types';
 
 export default class Home extends Component {
+  _isMounted = false
 
   constructor(props) {
     super(props)
@@ -22,29 +23,40 @@ export default class Home extends Component {
     }
   };  
 
-
   componentDidMount() {
+    this._isMounted= true
+    let propPermission ;
     try {
-      this.setState({
-        permission: this.props.location.state.detail.result.permission,
-        formInfo: {
-          task: '',
-          client: ''
+      if(this._isMounted) {
+        console.log(this.props);
+        
+        if(typeof this.props.location.state.permission !== 'undefined') {
+          propPermission = this.props.location.state.permission;
+          console.log(`propPermission ${propPermission}`)
+        } else {
+          propPermission = this.props.location.state.detail.result.permission
         }
-      }, () => {
-        console.log(this.state);
-        if(this.props.location.state.detail.result.permission === 0 ? 1 : 0) {
-          this.props.history.push({
-            pathname: '/NotFound'
-          });
-        };
-      })
+        this.setState({
+          permission: propPermission
+        }, () => {
+          console.log(this.state);
+          if(propPermission === 0 ? 1 : 0) {
+            this.props.history.push({
+              pathname: '/NotFound'
+            });
+          };
+        })
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       this.props.history.push({
         pathname: '/NotFound'
       });
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   clog = () => {
