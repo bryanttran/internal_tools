@@ -38,8 +38,7 @@ export class unapproveEmail extends Component {
           this.setState({
             client: this.props.location.state.client,
             permission: this.props.location.state.permission
-          }, () => console.log(this.props.location.permission)
-          )
+          })
         } catch (err) {
           console.log(err);
           this.props.history.push({

@@ -82,49 +82,19 @@ router.post('/getUsers', (req, res) => {
 
 // this is our update method
 // this method overwrites existing data in our database
-router.post('/updateData', (req, res) => {
-  const { id, update } = req.body;
-  console.log(`id in updateData: ${id}`);
-  console.log(`update in updateData: ${req.body.update}`);
-  Data.findOneAndUpdate({id: id}, update, (err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
-  });
-});
-
-// this is our delete method
-// this method removes existing data in our database
-router.delete('/deleteData', (req, res) => {
-  const { id } = req.body;
-  console.log(`id in delete: ${id}`);
-  Data.findOneAndDelete({id: id}, (err) => {
-    if (err) return res.send(err);
-    return res.json({ success: true });
-  });
-});
-
-// this is our create method
-// this method adds new data in our database
-router.post('/putData', (req, res) => {
-  let data = new Data();
-
-  const { id, message, username, password } = req.body;
-
-  if ((!id && id !== 0) || !message) {
-    return res.json({
-      success: false,
-      error: 'INVALID INPUTS',
+router.post('/updateEmail', (req, res) => {
+  const { client, statementType , update } = req.body;
+    emailData.updateOne( 
+      {"name": client, "emailList.statementType": statementType},
+      update,
+      (err, result) => {
+        if (err) {
+          console.log(err); 
+          return res.json({ success: false, error: err });
+        }
+        return res.json({ success: true, result: result});
     });
-  }
-  data.message = message;
-  data.username = username;
-  data.password = password;
-  data.id = id;
-  data.save((err) => {
-    if (err) return res.json({ success: false, error: err });
-    return res.json({ success: true });
   });
-});
 
 // append /api for our http requests
 app.use('/api', router);

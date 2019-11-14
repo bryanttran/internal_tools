@@ -57,9 +57,13 @@ export class EmailTable extends Component {
                     this.props.emailList.map((email) => {
                         console.log(email.statementType);
                         return (
-                            <Table.Row onClick={ () => this.clog(email.statementType)} className={email.isApproved === 'Y' ? 'positive' : 'negative'}>
-                                <Table.Cell> { email.statementType}</Table.Cell>
-                                <Table.Cell > {email.isApproved}</Table.Cell> 
+                            <Table.Row 
+                                onClick={ () => this.clog(email.statementType)} 
+                                className={email.isApproved === 'Y' ? 'positive' : 'negative'}
+                                key={email.statementType}
+                            >
+                                <Table.Cell> {email.statementType} </Table.Cell>
+                                <Table.Cell> {email.isApproved} </Table.Cell> 
                             </Table.Row>
                         )
                     })

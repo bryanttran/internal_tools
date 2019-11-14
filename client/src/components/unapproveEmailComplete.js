@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from "axios";
 
 export class unapproveEmailComplete extends Component {
     constructor(props) {
@@ -15,40 +16,74 @@ export class unapproveEmailComplete extends Component {
             pathname: '/home',
             state: {
                 client: this.props.location.state.client,
-                statementType: this.props.statementType,
+                statementType: this.props.location.state.statementType,
                 permission: this.props.location.state.permission
              }
         })
     }
 
     countDown() {
-        this.setState(state => ({
-            seconds: state.seconds - 1
-          }));
+        if (this.state.intervalIsSet) {
+            this.setState(state => ({
+                seconds: state.seconds - 1
+            }));
+        }
     }
+
+    update = {
+        "$set": {
+            "emailList.$.isApproved": "N"
+        }
+    };
 
      // Fetches all data when component mounts
     componentDidMount() {
+        console.log(this.props.location.state.client)
+        console.log(this.props.location.state.statementType)
+
+        axios.post("http://localhost:4000/api/updateEmail", {
+            statementType: this.props.location.state.statementType,
+            client: this.props.location.state.client,
+            update: this.update,
+        })
+          .then((res) => {
+            if(res.data.success === true) {
+              console.log(`**[updateEmail] sucessfully updated approval status`);
+              console.log(res)
+            } else {
+                console.error(`**[updateEmail] Error updating approval status`);
+                console.error(res);
+            }
+          })
+            .catch((error) => {
+                console.error(error)
+            }) 
+      
+
         if (!this.state.intervalIsSet) {
-            let interval = setInterval( () => {
-                this.NextPage();
-            }, 5000);
-            this.setState({ intervalIsSet: interval });
+            this.setState({ intervalIsSet: true });
+            this.interval = setInterval(
+                () => { this.NextPage() },
+                5000
+            );
+            this.intervalCountDown = setInterval( 
+                () => this.countDown(), 
+                1000 
+            )
         }
-        this.interval = setInterval( () => this.countDown(), 1000 )
     }
 
     componentWillUnmount() {
-        if (this.state.intervalIsSet) {
-          clearInterval(this.state.intervalIsSet);
-          this.setState({ intervalIsSet: null });
-        }
+        this.setState({ intervalIsSet: false });
+        clearInterval(this.interval);
+        clearInterval(this.intervalCountDown);
     }
 
     render() {
         return (
             <div>
-                <h1>Redirected to home page in {this.state.seconds} seconds</h1>
+                <h2>Successfully</h2>
+                <h2>Redirected to home page in {this.state.seconds} seconds</h2>
             </div>
         )
     }

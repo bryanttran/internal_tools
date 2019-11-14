@@ -14,7 +14,7 @@ export class unapproveEmailConfirm extends Component {
             pathname: '/unapproveEmailComplete',
             state: {
                 client: this.props.location.state.client,
-                statementType: this.props.statementType,
+                statementType: this.props.location.state.statementType,
                 permission: this.props.location.state.permission
              }
         }, 
