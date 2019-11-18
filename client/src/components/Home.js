@@ -93,7 +93,11 @@ export default class Home extends Component {
       } else if(this.state.formInfo.task === "resetPassword") {
         this.props.history.push({
           pathname: '/resetAdminPassword',
-          state: { client: this.state.formInfo.client }
+          state: { 
+            client: this.state.formInfo.client,
+            permission: this.state.permission
+
+          }
         });
       }
     }
