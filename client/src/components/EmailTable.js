@@ -11,7 +11,6 @@ export class EmailTable extends Component {
     constructor(props) {
         super(props);
         this.RenderTBodyRow = this.RenderTBodyRow.bind(this)
-
     }
     static propTypes = {
 
@@ -22,7 +21,7 @@ export class EmailTable extends Component {
         console.log(emailKey);
     }
 
-    state: {
+    state = {
         client: '',
         emailList: []
     }
@@ -34,8 +33,7 @@ export class EmailTable extends Component {
         }), () => console.log(`state updated: ${this.state}`)
     }
     
-    clog = (statementType) => {
-        console.log(this.props);
+    nextPage = (statementType) => {
         this.props.nextPage(statementType)
     }
 
@@ -58,7 +56,7 @@ export class EmailTable extends Component {
                         console.log(email.statementType);
                         return (
                             <Table.Row 
-                                onClick={ () => this.clog(email.statementType)} 
+                                onClick={ email.isApproved === 'Y' ? () => this.nextPage(email.statementType) : ()=>{}} 
                                 className={email.isApproved === 'Y' ? 'positive' : 'negative'}
                                 key={email.statementType}
                             >

@@ -73,22 +73,23 @@ export class unapproveEmail extends Component {
         })
       }
 
-    clog = () => {
-      console.log(this.state);
+    PreviousPage = () => {
+      this.props.history.goBack();
     }
   
     render() {
         return (
             <div>
-                <Button primary 
-                  onClick={ ()=>this.clog() } 
-                  content="cLog"
-                />
-                 <EmailTable 
-                    client={this.state.client}  
-                    emailList={this.state.emailList}
-                    nextPage={this.nextPage}
-                  />
+              <EmailTable 
+                client={this.state.client}  
+                emailList={this.state.emailList}
+                nextPage={this.nextPage}
+              />
+              <br />
+              <Button primary
+                onClick={ ()=>this.PreviousPage() } 
+                content="Go Back"
+              />
             </div>
         )
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react';
 import axios from "axios";
+import AdminTable from './AdminTable'
 
 export class resetAdminPassword extends Component {
     static propTypes = {
@@ -11,8 +12,8 @@ export class resetAdminPassword extends Component {
     state = {
         client: '',
         userList: [{
-          statementType: "",
-          isApproved: ""
+          username: "",
+          password: ""
         }]
       };  
     
@@ -36,9 +37,9 @@ export class resetAdminPassword extends Component {
         })
           .then((res) => {
             if(res.data.success === true) {
-                console.log(res.data)
+                console.log(res.data.result.userList)
               console.log(`**[getUsers] Got user List successfully`);
-              this.setState({userList: res.data.result});
+              this.setState({userList: res.data.result.userList});
             } else {
               console.error(`**[getUsers] Error getting user list`);
             }
@@ -49,18 +50,38 @@ export class resetAdminPassword extends Component {
         
       }
 
-      
   clog = () => {
     console.log(this.state.userList);
   }
+
+  nextPage = (username, password) => {
+    this.props.history.push({
+      pathname: '/resetAdminPasswordConfirm',
+      state: {
+         client: this.props.location.state.client,
+         username: username,
+         password: password,
+         permission: this.props.location.state.permission
+      }
+    })
+  }
+
+  PreviousPage = () => {
+    this.props.history.goBack();
+  }
+
     render() {
         return (
             <div>
-                resetAdminPassword
-                <Button primary 
-                  onClick={ ()=>this.clog() } 
-                  content="cLog"
-                />
+              <AdminTable 
+                client={this.state.client}  
+                userList={this.state.userList}
+                nextPage={this.nextPage}
+              />
+              <Button primary
+                onClick={ ()=>this.PreviousPage() } 
+                content="Go Back"
+              />
             </div>
         )
     }

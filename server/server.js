@@ -96,6 +96,23 @@ router.post('/updateEmail', (req, res) => {
     });
   });
 
+// this is our update method
+// this method overwrites existing data in our database
+router.post('/updateUserPassword', (req, res) => {
+  const { client, username, password , update } = req.body;
+  console.log(req.body)
+  userData.updateOne( 
+      {"name": client, "userList.username": username},
+      update,
+      (err, result) => {
+        if (err) {
+          console.log(err); 
+          return res.json({ success: false, error: err });
+        }
+      return res.json({ success: true, result: result});
+    });
+  });
+
 // append /api for our http requests
 app.use('/api', router);
 

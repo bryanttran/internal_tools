@@ -35,9 +35,6 @@ export class unapproveEmailConfirm extends Component {
             </div>
         )
     }
-
-    
 }
-
 
 export default unapproveEmailConfirm
