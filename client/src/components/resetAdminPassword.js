@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Button } from 'semantic-ui-react';
 import axios from "axios";
 import AdminTable from './AdminTable'
 
 export class resetAdminPassword extends Component {
-    static propTypes = {
 
-    }
 
     state = {
         client: '',
@@ -26,7 +23,7 @@ export class resetAdminPassword extends Component {
           }, () => console.log(this.props.location.permission)
           )
         } catch (err) {
-          console.log(err);
+          console.error(err);
           this.props.history.push({
             pathname: '/NotFound'
           });

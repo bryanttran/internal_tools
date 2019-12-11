@@ -3,7 +3,14 @@ import { Button, Grid, Message } from 'semantic-ui-react';
 import Breadcrumbs from './Breadcrumbs';
 import Tasks from './Tasks';
 
-export default class Home extends Component {
+//redux imports
+import { connect } from 'react-redux'
+import {getPermission} from '../redux/actions'
+import store from "../redux/store";
+
+
+
+class Home extends Component {
 
   constructor(props) {
     super(props)
@@ -25,9 +32,13 @@ export default class Home extends Component {
 
   componentDidMount() {
     //let test = getPermission()
-    console.log(this.props.location.state)
+    console.log(this.props)
     let propPermission;
     try {
+      console.log(this.props.getPermission());
+      propPermission=this.props.permission;
+      console.log(propPermission);
+      console.log(this.props.USERNAME);
 
       //propPermission = this.props.location.state.detail[0].PRIVILEGE
 
@@ -38,8 +49,8 @@ export default class Home extends Component {
         propPermission = this.props.location.state.detail[0].PRIVILEGE
       }*/
       this.setState({
-        permission: this.props.location.state.permission,
-        username: this.props.location.state.username
+        permission: propPermission,
+        username: this.props.username
       }, () => {
         console.log(this.state);
         if(this.state.permission === 0 ? 1 : 0) {
@@ -90,8 +101,8 @@ export default class Home extends Component {
           pathname: '/unapproveEmail',
           state: {
              client: this.state.formInfo.client,
-             permission: this.props.location.state.permission,
-             username: this.props.location.state.username,
+             permission: this.state.permission,
+             username: this.state.username,
              schema: this.state.formInfo.schema
           }
         });
@@ -100,9 +111,8 @@ export default class Home extends Component {
           pathname: '/resetAdminPassword',
           state: { 
             client: this.state.formInfo.client,
-            permission: this.props.location.state.permission,
-            username: this.props.location.state.username,
-            schema: this.state.formInfo.schema
+            permission: this.state.permission
+
           }
         });
       }
@@ -122,7 +132,7 @@ export default class Home extends Component {
         
           <h1>Home page</h1> 
           <p>Displaying home</p>
-          <p>Permission level: {this.props.location.state.permission}</p>
+          <p>Permission level: {this.props.permission}</p>
           <Button primary
             onClick={ ()=>this.clog() } 
             content="cLog"
@@ -148,6 +158,19 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const {permissions} = state
+  console.log(permissions.permission);
+  console.log(permissions);
+  console.log(permissions.username);
+  return { permission: permissions.permission, username: permissions.username}
+}
+
+export default connect(
+  mapStateToProps,
+  {getPermission}
+)(Home)
 
 /*Home.propTypes = {
   permission: PropTypes.string.isRequired

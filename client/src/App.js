@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button } from 'semantic-ui-react';
 import Routes from "./Routes";
 
 class App extends Component {
@@ -17,12 +16,12 @@ class App extends Component {
   };
 
   // Fetches all data when component mounts
-  componentDidMount() {
+  /*componentDidMount() {
     if (!this.state.intervalIsSet) {
       let interval = setInterval(this.getDataFromDb, 50000);
       this.setState({ intervalIsSet: interval });
     }
-  }
+  }*/
   
   // Kills process after finished
   componentWillUnmount() {
@@ -34,7 +33,7 @@ class App extends Component {
 
   // Method to fetch to our backend API to fetch from MongoDB
   getDataFromDb = () => {
-    fetch("http://localhost:4000/api/getData")
+    fetch("http://localhost:4000/api/employees")
       .then(data => data.json())
       .then(res => this.setState({ data: res.data }));
   };
@@ -92,87 +91,12 @@ class App extends Component {
     });
   };
 
-  /*render() {
-    const { data } = this.state;
-    return (
-      <div>
-        <ul>
-          {data.length <= 0 ? "No Documents available" : data.map(dat => (
-            <li style={{ padding: "10px" }} key={dat._id}>
-              <span style={{ color: "gray" }}> id: </span> {dat.id} <br />
-              <span style={{ color: "gray" }}> message: </span> {dat.message}<br />
-              <span style={{ color: "gray" }}> username: </span> {dat.username} <br />
-              <span style={{ color: "gray" }}> password: </span> {dat.password} <br />
-            </li>
-          ))}
-        </ul>
-        <div style={{ padding: "10px" }}>
-        <input
-            type="text"
-            onChange={e => this.setState({ message: e.target.value })}
-            placeholder="Message to add"
-            style={{ width: "200px" }}
-          />
-        <input
-            type="text"
-            onChange={e => this.setState({ username: e.target.value })}
-            placeholder="Username to add"
-            style={{ width: "200px" }}
-          />
-        <input
-          type="text"
-          onChange={e => this.setState({ password: e.target.value })}
-          placeholder="Password to add"
-          style={{ width: "200px" }}
-        />
-          <Button secondary onClick={() => this.putDataToDB(this.state.message, this.state.username, this.state.password)}>
-            Add
-          </Button>
-        </div>
-        <div style={{ padding: "10px" }}>
-          <input
-            type="text"
-            style={{ width: "200px" }}
-            onChange={e => this.setState({ idToDelete: e.target.value })}
-            placeholder="ID of item to delete"
-          />
-          <Button secondary onClick={() => this.deleteFromDB(this.state.idToDelete)}>
-            Delete
-          </Button>
-        </div>
-        <div style={{ padding: "10px" }}>
-          <input
-            type="text"
-            style={{ width: "200px" }}
-            onChange={e => this.setState({ idToUpdate: e.target.value })}
-            placeholder="ID of item to update"
-          />
-          <input
-            type="text"
-            style={{ width: "200px" }}
-            onChange={e => this.setState({ updateToApply: e.target.value }) }
-            placeholder="Message of item to add"
-          />
-          <Button secondary
-            onClick={() =>
-              this.updateDB(this.state.idToUpdate, this.state.updateToApply)
-            }
-          >
-            Update
-          </Button>
-        </div>
-        <Routes />
-      </div>
-
-    );
-  }*/
   render() {
     return(
-    <div className='parent-container'>
-    <Routes />
-  </div>)
-    
-  }
+      <div className='parent-container'>
+        <Routes />
+      </div>
+    )}
 }
 
 export default App;

@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import {Button} from 'semantic-ui-react'
 
 const redStyle = { color: 'red'}
 
 export class unapproveEmailConfirm extends Component {
-    static propTypes = {
 
-    }
 
     NextPage = () => {
         this.props.history.push({
@@ -15,6 +12,8 @@ export class unapproveEmailConfirm extends Component {
             state: {
                 client: this.props.location.state.client,
                 statementType: this.props.location.state.statementType,
+                schema: this.props.location.state.schema,
+                username: this.props.location.state.username,
                 permission: this.props.location.state.permission
              }
         }, 

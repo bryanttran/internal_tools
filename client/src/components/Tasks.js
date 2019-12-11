@@ -30,7 +30,8 @@ export class Tasks extends Component {
     },
     clientList: [],
     taskValue: '',
-    clientValue: ''
+    clientValue: '',
+    clients: []
   };    
 
 
@@ -38,10 +39,15 @@ export class Tasks extends Component {
     axios.get("http://localhost:4000/api/getClients", {
     })
       .then((res) => {
-        console.log(res.data.client[0])
-        if(res.data.success === true) {
+        console.log(`**[getClientList] Got client list`);
+        let clientList = res.data.map( cid => ({
+          "text":cid.ORG_UNIQUENAME,
+          "value":cid.ORG_UNIQUENAME,
+          "schema": cid.SCHEMA_NAME
+        }))
+        if(clientList !== undefined || clientList.length !== 0) {
           console.log(`**[getClientList] Got client list`);
-          this.setState({clientList: res.data.client});
+          this.setState({clientList: clientList });
           console.log(this.state.clientList)
         } else {
          console.error(`**[getClientList] Error getting client list`);
@@ -79,7 +85,8 @@ export class Tasks extends Component {
 
   handleClientChange(event, {value}) {
     console.log(value)
-    this.props.setClient(value)
+    let cidObject = this.state.clientList.find(cid => cid.text === value )
+    this.props.setClient(cidObject)
     this.setState({ clientValue:value })
   }
 
@@ -94,7 +101,7 @@ export class Tasks extends Component {
   render() {
     const {  clientList, clientValue, taskValue } = this.state
       return (
-          <div>
+          <div> 
               <Form onSubmit={this.handleSubmitForm}>
                 <Form.Group widths='equal' >
                   <Dropdown 
@@ -109,7 +116,7 @@ export class Tasks extends Component {
                 </Form.Group>
                 <Form.Group widths='equal' >
                   <Dropdown 
-                    fluid selection
+                    fluid selection search 
                     label='Select a Client' 
                     control='select' 
                     placeholder='Select Client' 

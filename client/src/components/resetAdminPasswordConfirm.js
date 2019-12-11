@@ -47,14 +47,14 @@ export class resetAdminPasswordConfirm extends Component {
                 }
                 <Input 
                     placeholder='New password' 
-                    onChange ={ this.handleChange}
+                    onChange={ this.handleChange}
                     name='newPassword' 
                 />
                 <br />
                 <br />
                 <Input 
                     placeholder='Confirm new password' 
-                    onChange ={this.handleChange} 
+                    onChange={this.handleChange} 
                     name='newPasswordConfirm' 
                 />
                 <br />

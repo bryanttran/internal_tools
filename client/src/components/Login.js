@@ -3,8 +3,10 @@ import './Login.css';
 import { Form, Message, Segment, Button } from 'semantic-ui-react';
 import axios from "axios";
 
+import { connect } from 'react-redux'
+import {setPermission, setInternalUser} from '../redux/actions'
 
-export default class Login extends Component {
+class Login extends Component {
     state = { 
       username: '', 
       password: '', 
@@ -18,34 +20,43 @@ export default class Login extends Component {
     isUsernamePasswordValid = (username, password) => {
         console.log(`isUsernamePasswordValid ${username} + ${password}`);
 
-        this.setState({username: username, password: password});
+        //this.setState({username: username, password: password});
 
-        axios.post("http://localhost:4000/api/getLogin", {
+        axios.post("http://localhost:4000/api/login", {
             username: username,
             password: password,
             isLoggedIn: this.isLoggedIn
         })
           .then((res) => {
-            console.log(`success status: ${res.data.success}`)
-            console.log(res)
-            if(res.data.success === true) {
-              this.setState({isLoggedIn: true, formError: false});
+            console.log(res.data[0])
+            if(res.data === undefined || res.data.length === 0) {
+              //this.setState({isLoggedIn: false, formError: true});
             } else {
-              this.setState({isLoggedIn: false, formError: true});
+              //this.setState({isLoggedIn: true, formError: false});
             }
-            
-            console.log(`state isLoggedIn: ${this.state.isLoggedIn}`)
-            console.log(res.data.result);
+            /*console.log(this.props)
+            console.log(setPermission)
+            this.props.setPermission(res.data[0].PRIVILEGE)
+
+            console.log(setInternalUser)
+            this.props.setInternalUser(res.data[0].USERNAME)
+
+            console.log(`state isLoggedIn: ${this.state.isLoggedIn}`)*/
+            console.log(res.data[0].USERNAME);
 
 
-            if(this.state.isLoggedIn) {
+            if(res.data[0].PRIVILEGE>0) {
               try {
                 console.log(this.props)
                 console.log(`${this.state.isLoggedIn} in login`);
+                //this.props.setPermission(res.data[0].PRIVILEGE)
                 //this.props.isLoggedIn = true;
                 this.props.history.push({
                   pathname: '/home',
-                  state: { detail: res.data }
+                  state: {
+                    username: res.data[0].USERNAME,
+                    permission: res.data[0].PRIVILEGE
+                  }
                 });
               } catch (e) {
                 alert(e.message);
@@ -68,7 +79,7 @@ export default class Login extends Component {
     }
   
     render() {
-      const { username, password, submittedUsername, submittedPassword, formError } = this.state;
+      const { username, password, formError } = this.state;
   
       return (
         <div className='login-container'>
@@ -92,6 +103,7 @@ export default class Login extends Component {
                   iconPosition='left'
                   placeholder='Password'
                   name='password'
+                  type='password'
                   value={password}
                   onChange={this.handleChange}
                 />
@@ -109,3 +121,8 @@ export default class Login extends Component {
       )
     }
 }
+
+export default connect(
+  null,
+  {setPermission, setInternalUser}
+)(Login)

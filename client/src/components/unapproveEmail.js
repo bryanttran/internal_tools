@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { Button, Table } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import axios from "axios";
 import EmailTable from './EmailTable'
 
@@ -17,9 +16,6 @@ console.error  = function(warning) {
 
 export class unapproveEmail extends Component {
 
-  constructor(props) {
-    super(props);
-  }
 
     state = {
         client: '',
@@ -45,14 +41,15 @@ export class unapproveEmail extends Component {
             pathname: '/NotFound'
           });
         }
-
-        axios.post("http://localhost:4000/api/getEmails", {
-          client: this.props.location.state.client,
+        axios.post("http://localhost:4000/api/getEmailList", {
+          CID: this.props.location.state.client,
+          schema: this.props.location.state.schema,
         })
           .then((res) => {
-            if(res.data.success === true) {
+            console.log(res)
+            if(res.data) {
               console.log(`**[getClientList] Got Email List successfully`);
-              this.setState({emailList: res.data.result});
+              this.setState({emailList: res.data});
             } else {
               console.error(`**[getClientList] Error getting email list`);
             }
@@ -68,6 +65,8 @@ export class unapproveEmail extends Component {
           state: {
              client: this.props.location.state.client,
              statementType: statementType,
+             schema: this.props.location.state.schema,
+             username: this.props.location.state.username,
              permission: this.props.location.state.permission
           }
         })
@@ -79,7 +78,7 @@ export class unapproveEmail extends Component {
   
     render() {
         return (
-            <div>
+            <div> 
               <EmailTable 
                 client={this.state.client}  
                 emailList={this.state.emailList}

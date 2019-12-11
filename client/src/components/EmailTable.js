@@ -1,25 +1,19 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { Table } from 'semantic-ui-react'
 
-let emailKey = [];
+var PropertiesReader = require('properties-reader');
+
+let path = '//10.8.8.221/d/processing-ui/conf'
 
 const redStyle = { color: 'red'}
-
 
 export class EmailTable extends Component {
     constructor(props) {
         super(props);
         this.RenderTBodyRow = this.RenderTBodyRow.bind(this)
-    }
-    static propTypes = {
 
     }
 
-    getEmailKey = (email) => {
-        emailKey=Object.keys(email);
-        console.log(emailKey);
-    }
 
     state = {
         client: '',
@@ -30,7 +24,7 @@ export class EmailTable extends Component {
         this.setState({
             client: this.props.client,
             emailList: this.props.emailList
-        }), () => console.log(`state updated: ${this.state}`)
+        })
     }
     
     nextPage = (statementType) => {
@@ -53,15 +47,15 @@ export class EmailTable extends Component {
             <Table.Body>
                 {
                     this.props.emailList.map((email) => {
-                        console.log(email.statementType);
+                        console.log(email.STMT_TYPE);
                         return (
                             <Table.Row 
-                                onClick={ email.isApproved === 'Y' ? () => this.nextPage(email.statementType) : ()=>{}} 
-                                className={email.isApproved === 'Y' ? 'positive' : 'negative'}
-                                key={email.statementType}
+                                onClick={ email.EM_IS_APPROVED === 'Y' ? () => this.nextPage(email.STMT_TYPE) : ()=>{}} 
+                                className={email.EM_IS_APPROVED === 'Y' ? 'positive' : 'negative'}
+                                key={email.STMT_TYPE}
                             >
-                                <Table.Cell> {email.statementType} </Table.Cell>
-                                <Table.Cell> {email.isApproved} </Table.Cell> 
+                                <Table.Cell> {email.STMT_TYPE} </Table.Cell>
+                                <Table.Cell> {email.EM_IS_APPROVED} </Table.Cell> 
                             </Table.Row>
                         )
                     })
@@ -74,7 +68,7 @@ export class EmailTable extends Component {
     render() {
 
         return (
-            <div>
+            <div> {console.log(this.props.emailList)}
                 <h2>Click on the row to disable approval status for <span style={redStyle}>{this.props.client}</span> </h2>
                 <Table celled selectable>
                     {this.RenderTBodyHeader()}

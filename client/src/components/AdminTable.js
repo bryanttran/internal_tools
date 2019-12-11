@@ -14,7 +14,7 @@ export class AdminTable extends Component {
         this.setState({
             client: this.props.client,
             userList: this.props.userList
-        }), () => console.log(`state updated: ${this.state}`)
+        })
     }
 
     nextPage = (username, password) => {
